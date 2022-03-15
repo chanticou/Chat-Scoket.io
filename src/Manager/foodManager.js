@@ -1,67 +1,48 @@
-const fs = require('fs')
+// const fs = require('fs')
+const database = require('../createTable')
+// import database from '../createTable'
 
-
-const pathFood = __dirname + '/../files/pokemons'
+// const pathFood = __dirname + '/../files/pokemons'
 
 class foodManager{
 
     createNewFood= async (food)=>{
-        // if(!pokemon.name | !pokemon.type) return {status:'Missing data'}
-        
-        try{
-            if(fs.existsSync(pathFood)){
-                let data = await fs.promises.readFile(pathFood, 'utf-8' ,null, 3)
-                let foods = JSON.parse(data)
-                let id= foods[foods.length-1].id +1
-                food.id=id
-                foods.push(food)
-
-         
-                await fs.promises.writeFile(pathFood, JSON.stringify(foods, null, 3))
-                return {status:'success', message:'New food created',payload:foods}
-            }else{
-                food.id=1
-                await fs.promises.writeFile(pathFood, JSON.stringify([food], null, 3))
-                return{status:'Succes', message:'First food created'}
-            }
-
+        if(!food.name || !food.price) return {status:'Missing data'}
+         try{
+                
+            database('foods').insert(food)
+            .then(()=>console.log('Productos guardados'))
+    
+                 
         }catch(error){
             return {status:'error', message:error }
         }
     }
 
-    searchfood=async(name)=>{
-            try{                
-                if(fs.existsSync(pathFood)){
-                    let data = await fs.promises.readFile(pathFood, 'utf-8' ,null, 3)
-                    let foods = JSON.parse(data)
 
-                    let findfood = foods.find(el=>(el.name=== name))
-                    return {status:'success', message:findfood}
-                }
+
+    searchById=async(id)=>{
+            try{       
+            //WHERE
+            // FIND BY ID 
+            database.from('foods').select('*').where('id', id)
+            .then(data=>{
+                let findById = JSON.parse(JSON.stringify(data))
+                console.log(findById) 
+            })         
+             
             }catch(error){
                 return {status:'error', message:error }
             }
     }
 
-    updateUsers=async(name, updatefood)=>{
+    updateUsers=async(id, updatefood)=>{
         try{
-            if(fs.existsSync(pathFood)){
-                let data = await fs.promises.readFile(pathFood, 'utf-8' ,null, 3)
-                let foods = JSON.parse(data)
-
-                let newArrayUpdate= foods.map((food)=>{
-                    if(food.name === name){
-                        return updatefood
-                    }else{
-                        return food
-                    }
-                })
-
-                await fs.promises.writeFile(pathFood, JSON.stringify(newArrayUpdate, null, 3))
-                return {status:'Succes', message:'update food' }
-            }
-
+             database.from('foods').where('id', id).update({name:updatefood})
+            .then(data=>{
+                let update = JSON.parse(JSON.stringify(data))
+                console.log(update) 
+            })
         }catch(error){
             return {status:'error', message:error}
         }
