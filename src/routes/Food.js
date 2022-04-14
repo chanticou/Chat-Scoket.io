@@ -1,7 +1,8 @@
-const express= require('express')
+import express from 'express'
 const router = express.Router()
-const foodManager = require('../Manager/foodManager')
-const uploader = require('../services/upload')
+import foodManager from './../Manager/foodManager.js'
+
+
 
 
 const newFood = new foodManager()
@@ -24,4 +25,15 @@ router.put('/:id', (req,res)=>{
 })
 
 
-module.exports=router;
+export default router;
+
+
+
+
+
+
+
+
+
+
+

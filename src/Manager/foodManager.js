@@ -1,16 +1,16 @@
-// const fs = require('fs')
-const database = require('../createTable')
-// import database from '../createTable'
+import database from '../createTable.js'
 
-// const pathFood = __dirname + '/../files/pokemons'
+
+
+
 
 class foodManager{
 
     createNewFood= async (food)=>{
-        if(!food.name || !food.price) return {status:'Missing data'}
+        // if(!food.name || !food.price) return {status:'Missing data'}
          try{
                 
-            database('foods').insert(food)
+            await database('foods').insert(food)
             .then(()=>console.log('Productos guardados'))
     
                  
@@ -19,6 +19,17 @@ class foodManager{
         }
     }
 
+    // pruebaChat=async(chatInfo)=>{
+    //     try{
+                
+    //         database('foods').insert(chatInfo)
+    //         .then(()=>console.log('Productos guardados'))
+    
+                 
+    //     }catch(error){
+    //         return {status:'error', message:error }
+    //     }
+    // }
 
 
     searchById=async(id)=>{
@@ -49,23 +60,22 @@ class foodManager{
     }
 
     getAllfoods=async()=>{
-        if(fs.existsSync(pathFood)){
-            try{
-                let data = await fs.promises.readFile(pathFood, 'utf-8' ,null, 3)
-                let foods = JSON.parse(data)
-                
-                return{status:'Succes, get all Pokmemons', payload:foods}
+ 
+        try{
 
-            }catch(error){
-                return{status:error, message:error}
-            }
-        }else{
-            return{status: 'Theres no foods', payload: [] }
+           await database.select('*').from('foods').then(data=>{
+               console.log(data)
+                // let allFoods = JSON.parse(data)
+                console.log(data)
+                // return allFoods
+            })
+
+        }catch(error){
+            return{status:error, message:error}
         }
     }
 
   
 }
 
-
-module.exports=foodManager
+export default foodManager;

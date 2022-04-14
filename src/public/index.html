@@ -7,36 +7,53 @@
     <link rel="stylesheet" href="style.css">
     <title>CHAT</title>
 </head>
+
 <body>
+    <!-- FORM LOGIN -->
+    <div class="content-form">
+        <form id="login-form">
+            <label>Name:</label>
+            <input type="text" name="name">
+
+            <label>Password:</label>
+            <input type="password" name="password">
+
+            <input class="login-submit" type="submit">
+        </form>
+    </div>
+    <button id='logout'>logout</button>
+<br><br><br>
+    <!-- FORM CHATBOX     -->
     <h1 class='title'>CREATE YOUR RECIPE</h1>
 
         <form id="foodForm" class='form'>
-            <label>Name:</label>
-            <input class="input" name="name">
-        
-            <label>Ingredients:</label> 
-            <input class="input" name="ingredients">
+            <label>Id:</label>
+            <input class="input" name="id">
 
-            
-            <label>Steeps:</label> 
-            <input class="input" id='steeps-input' name="steeps">
-            
+            <label>First name:</label>
+            <input class="input" name="firstName">
+        
+            <label>Last name:</label> 
+            <input class="input" name="lastName">
+
             <label>URL image</label>
             <input name='thumbnail'> 
-            <!-- <label>Image</label>
-            <input class="input" type="file" name="file">
-        -->
+
             <input class="input-submit" type="submit">
         </form>
 
-    <table id="table"> </table>   
-     
-    <div class="content-chat">
-        <h3>CHAT WTTH OTHER COOKS</h3>
-        <input id="chatBox">
-    </div>
 
-    <span id="history"></span>
+        
+        <div class="content-chat">
+            <h3>CHAT WTTH OTHER COOKS</h3>
+    
+            <input id="chatBox">
+        </div>
+    
+        
+        <table id="table"> </table>   
+        
+        <span id="history"></span>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="index.js"></script>

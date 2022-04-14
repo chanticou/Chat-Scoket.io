@@ -1,4 +1,4 @@
-const multer = require('multer')
+import multer from 'multer'
 
 //dodne se van a guardar los archivos
 let storage = multer.diskStorage({
@@ -19,4 +19,5 @@ let storage = multer.diskStorage({
 const uploader = multer({storage:storage})
 
 //ahora lo voy a exportar
-module.exports= uploader
+
+export default uploader;

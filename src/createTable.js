@@ -1,8 +1,6 @@
-// import options from '../src/options/sqlConfig.js'
-// import knex from 'knex'
+import options from '../src/options/sqlConfig.js'
+import knex from 'knex'
 
-const options = require('../src/options/sqlConfig.js')
-const knex = require('knex')
 
 const database = knex(options) 
 
@@ -18,7 +16,4 @@ const database = knex(options)
 // .finally(()=>database.destroy())
 
 
-
-
-module.exports=database;
-// export default database;
+export default database;
