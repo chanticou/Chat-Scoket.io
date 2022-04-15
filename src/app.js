@@ -1,17 +1,14 @@
-//Nuestro servidor
-// import {normalize,schema,denormalize} from 'normalizr'
-// import foodManager from './Manager/foodManager.js'
 import express from 'express'
 import {
     Server
 } from 'socket.io'
-import foodRoutes from '../src/routes/Food.js'
-import apiTestRoutes from '../src/routes/productsTest.js'
-import foodManager from './Manager/mognooseProducts.js'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
 //Mongo para almacenamiento de sesiones
 import MongoStore from 'connect-mongo'
+import foodRoutes from './routes/Food.js'
+import apiTestRoutes from './routes/productsTest.js'
+import foodManager from './Manager/mognooseProducts.js'
 
 
 import * as url from 'url';
@@ -46,6 +43,7 @@ app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({
     extended: true
 }))
+
 //La potencia de express de basa en sus midlewares
 app.use(session({
     //En store es dodne vamos a poner nuestro campo de persistencia
@@ -54,7 +52,7 @@ app.use(session({
         mongoUrl: 'mongodb+srv://chantal:logaritmoC@cluster0.dpj6h.mongodb.net/formLogin?retryWrites=true&w=majority',
         ttl: 10
     }),
-    secret: 'gdhyujmnjkadi', //mi clave secreta
+    secret: 'gdhyujmnjkadi',  //mi clave secreta
     resave: false, //al momento en el que se haga un request , va a refrescar la session con el fin que la sesion de mantenga actvia
     saveUninitialized: false, //cuando generas una sesion, tiene una MINI bases INTERNA, lo cual implica que la sesion va a estar guardada en un lugar, 
     // cookie:{
@@ -132,13 +130,15 @@ io.on('connection', async (socket) => {
 })
 
 app.get('/session', (req, res) => {
-
     if (dataForm.name === undefined) return res.send('There is no user logged in')
-    if (req.session.username) return res.send('User already logged');
+    if (req.session.username) return  res.redirect('login') / res.send('User already logged');
     req.session.username = dataForm;
     res.send(`Welcome ${dataForm.name}`);
 })
 
+app.get('/login', (req,res)=>{
+    res.send('SOY  ')
+})
 
 //logout
 //si yo quiero desloguearme vamos a destruir la sesion que me encuentro actualmente
